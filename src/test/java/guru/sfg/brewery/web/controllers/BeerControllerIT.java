@@ -49,11 +49,11 @@ public class BeerControllerIT {
     void setUp() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(wac)
-                .apply(springSecurity())
+                .apply(springSecurity()) // <----
                 .build();
     }
 
-    @WithMockUser("spring")
+    @WithMockUser("spring") // <===
     @Test
     void findBeers() throws Exception{
         mockMvc.perform(get("/beers/find"))

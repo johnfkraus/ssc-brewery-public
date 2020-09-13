@@ -113,3 +113,13 @@ List of branches in original project:
   remotes/origin/ua-customer-brewery-perms
   remotes/origin/ua-jpa-config
   remotes/origin/ua-update-remaining-controllers
+
+H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:ab52d441-49cb-4015-b36d-aed71dc79757' (url changes each time to re-start).
+
+Base64 encode: 
+user:f3ee25e2-c0ff-4f2b-a98f-56ca05ea34ad
+https://www.base64encode.org/
+
+dXNlcjpmM2VlMjVlMi1jMGZmLTRmMmItYTk4Zi01NmNhMDVlYTM0YWQ=
+
+

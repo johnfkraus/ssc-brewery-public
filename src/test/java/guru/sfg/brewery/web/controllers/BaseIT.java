@@ -19,9 +19,9 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
  */
 public abstract class BaseIT {
     @Autowired
-    WebApplicationContext wac;
+     WebApplicationContext wac;
 
-    MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     @MockBean
     BeerRepository beerRepository;

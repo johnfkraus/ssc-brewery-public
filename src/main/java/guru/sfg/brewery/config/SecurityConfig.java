@@ -7,9 +7,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.ldap.LdapServerBeanDefinitionParser;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -19,10 +21,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,21 +41,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
-    // note, the {noop} thing has to do with password encoder
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        //return NoOpPasswordEncoder.getInstance();
+        return new LdapShaPasswordEncoder();
+    }
+
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("spring")
-                .password("guru")
+                .password("{SSHA}SzmyJh4AfnxYV14dAMKj6lhtf7h6RyYRyI87SA==")
                 .roles("ADMIN")
                 .and()
                 .withUser("user")
-                .password("password")
-                .roles("USER")
-                        .and()
-                .withUser("scott")
+                .password("{SSHA}SzmyJh4AfnxYV14dAMKj6lhtf7h6RyYRyI87SA==")
+                .roles("USER");
+
+        auth.inMemoryAuthentication().withUser("scott")
                 .password("tiger")
                 .roles("CUSTOMER");
     }
+
+//    // note, the {noop} thing has to do with password encoder
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("spring")
+//                .password("guru")
+//                .roles("ADMIN")
+//                .and()
+//                .withUser("user")
+//                .password("password")
+//                .roles("USER")
+//                .and()
+//                .withUser("scott")
+//                .password("tiger")
+//                .roles("CUSTOMER");
+//    }
 
 //    @Override
 //    @Bean
